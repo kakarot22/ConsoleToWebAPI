@@ -7,7 +7,7 @@ namespace ConsoleToWebAPI.Controllers
     [ApiController]
     [Route("[controller]/[action]")] // treated as base URL
     public class ValuesController : ControllerBase
-    {
+    { 
         //[Route("api/get-all")]
         [Route("~/api/get-all")] // doesnt depend on base URL
         public string GetAll()
