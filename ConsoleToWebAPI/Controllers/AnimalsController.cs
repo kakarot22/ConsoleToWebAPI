@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ConsoleToWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] // we are setting the base route
     [ApiController]
     public class AnimalsController : ControllerBase
     {
         private List<AnimalModel> animals = null; // writing animals in the constructor so that we dont need to write animals again and again
-        public AnimalsController() 
+        public AnimalsController()
         {
             animals = new List<AnimalModel>()
             {
@@ -31,6 +31,14 @@ namespace ConsoleToWebAPI.Controllers
             
             return Accepted("~/api/animals"); // returning url from api
         }
+
+        [Route("test4")]
+        public IActionResult GetAnimalsTest()
+        {
+
+            return LocalRedirectPermanent("~/api/animals"); // returning url from api
+        }
+
 
         [Route("test2")]
         public IActionResult GetAnimals3()
@@ -71,7 +79,14 @@ namespace ConsoleToWebAPI.Controllers
                 return BadRequest();
             }
 
-            return Ok(animals.FirstOrDefault(x => x.Id == id));
+            var animal = animals.FirstOrDefault(x => x.Id == id);
+
+            if( animal == null)
+            {
+                return NotFound(); ;
+            }
+
+            return Ok(animal);
         }
 
         [HttpPost("")]
